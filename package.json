@@ -1,0 +1,37 @@
+{
+  "name": "account-manager-with-git",
+  "version": "0.0.0",
+  "description": "",
+  "main": "postcss.config.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Valunyashka/account-manager-hh.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Valunyashka/account-manager-hh/issues"
+  },
+  "homepage": "https://github.com/Valunyashka/account-manager-hh#readme",
+  "dependencies": {
+    "lucide-vue-next": "^0.563.0",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.27"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.4",
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vue-tsc": "^3.2.4"
+  }
+}
