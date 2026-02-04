@@ -1,11 +1,28 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import type { Account, Label } from '../types';
 
 export const useAccountStore = defineStore('accounts', () => {
-  const accounts = ref<Account[]>([]);
+  // Validation Rules
+  const isAccountValid = (a: Account): boolean => {
+    const hasLogin = !!a.login && a.login.trim().length > 0 && a.login.length <= 100;
+    const hasPassword = a.type === 'LDAP' || (!!a.password && a.password.trim().length > 0 && a.password.length <= 100);
+    return hasLogin && hasPassword;
+  };
+
+  // Persistence Logic (Only valid data)
+  const rawData = JSON.parse(localStorage.getItem('hh_accounts') || '[]');
+  const accounts = ref<Account[]>(rawData.filter(isAccountValid));
+
+  watch(accounts, (val) => {
+    const validToPersist = val.filter(isAccountValid);
+    localStorage.setItem('hh_accounts', JSON.stringify(validToPersist));
+  }, { deep: true });
 
   const createAccount = () => {
+    const hasInvalid = accounts.value.some(a => !isAccountValid(a));
+    if (hasInvalid) return null;
+
     const newAcc: Account = {
       id: crypto.randomUUID(),
       labels: [],
@@ -14,6 +31,7 @@ export const useAccountStore = defineStore('accounts', () => {
       password: ''
     };
     accounts.value.push(newAcc);
+    return newAcc.id;
   };
 
   const removeAccount = (id: string) => {
@@ -33,9 +51,6 @@ export const useAccountStore = defineStore('accounts', () => {
       .filter(s => s.length > 0)
       .map(text => ({ text }));
   };
-
-  // Stub for now
-  const isAccountValid = (a: Account) => true;
 
   return { accounts, createAccount, removeAccount, updateAccount, parseLabels, isAccountValid };
 });
