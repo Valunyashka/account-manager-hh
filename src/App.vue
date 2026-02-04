@@ -39,13 +39,17 @@ const store = useAccountStore();
 
     <!-- Accounts Grid -->
     <div class="relative">
-      <div class="account-container">
+      <transition-group
+        name="acc-list"
+        tag="div"
+        class="account-container"
+      >
         <AccountItem
           v-for="acc in store.accounts"
           :key="acc.id"
           :account="acc"
         />
-      </div>
+      </transition-group>
 
       <!-- Empty State -->
       <div v-if="store.accounts.length === 0" class="py-40 text-center border-2 border-dashed border-slate-800 rounded-3xl">
