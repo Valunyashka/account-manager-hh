@@ -1,6 +1,6 @@
 {
   "name": "account-manager-with-git",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "main": "postcss.config.js",
   "type": "module",
